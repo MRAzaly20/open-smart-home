@@ -93,59 +93,68 @@ const AboutPage = () => {
     };
 
     return (
-        <div
-            className="h-screen w-screen bg-cover bg-gray-300 bg-center
-                bg-[url('/bg.png')] sm:items-start"
-        >
+        <div>
             <SideNavbar>
                 <div
-                    className='md:relative flex md:w-full sm:w-full flex-col py-4
-                    items-center justify-center sm:mx-auto h-screen
-                    sm:max-h-[40rem]
-            md:max-h-[50rem] sm:max-w-[70rem] md:mr-100 px-3'
+                    className="h-screen w-screen bg-cover bg-gray-300 bg-center
+                bg-[url('/bg.png')] sm:items-start md:flex md:flex-cols-2 gap-1"
                 >
                     <div
-                        className='grid grid-cols-1 md:px-1 mt-1 mb-3 w-full
-                    h-300 z-10 '
-                    >
-                        <MonitorCard
-                            weather={"Cloudy"}
-                            temperature={"25°C"}
-                            tag_value={tag_value}
-                            places={"Wirobrajan, Yogyakarta"}
-                            isState={isToggled}
-                            onState={() => setIsToggled(!isToggled)}
-                        />
-                    </div>
-                    <div className='fixed blur-2xl top-16 w-1/2 h-14 bg-amber-400'></div>
-                    <div className='h-14 w-full md:w-[69rem] px-1 mb-4 md:ml-0'>
-                        <NavRoom
-                            room_one={"sitting room"}
-                            room_two={"beedroom"}
-                            room_tr={"kitchen"}
-                            room_fr={"bathroom"}
-                            room_f={"home page"}
-                            room_s={"home terrace"}
-                            handleRoomOne={() => userRoom("1")}
-                            handleRoomTwo={() => userRoom("2")}
-                            handleRoomTr={() => userRoom("3")}
-                            handleRoomFr={() => userRoom("4")}
-                            handleRoomF={() => userRoom("5")}
-                            handleRoomS={() => userRoom("6")}
-                            isRoom={isRoom}
-                        />
-                    </div>
+                        className='md:relative md:flex md:w-[250px]
+                        md:flex-col md:py-4
+                    items-center justify-center md:h-screen
+            md:max-h-[50rem] md:px-0'
+                    ></div>
                     <div
-                        className=' w-full md:px-1 grid sm:grid-cols-2
-                        md:grid-cols-2 gap-4 md:ml-2 overflow-y-scroll scrolling-touch items-start sm:h-full md:h-300'
+                        className='md:relative flex md:w-full sm:w-full flex-col py-4
+                    items-center justify-center sm:mx-auto h-screen
+                    sm:max-h-[40rem]
+            md:max-h-[50rem] px-3 md:px-0'
                     >
-                        {isRoom === "1" ? <SitRoomPanel /> : null}
-                        {isRoom === "2" ? <BadRoomPanel /> : null}
-                        {isRoom === "3" ? <KitchenRoom /> : null}
-                        {isRoom === "4" ? <BathRoomPanel /> : null}
-                        {isRoom === "5" ? "hello4" : null}
-                        {isRoom === "6" ? "hello5" : null}
-                        {isRoom == "" ? <SitRoomPanel /> : null}
+                        <div
+                            className='grid grid-cols-1 md:px-1 mt-1 mb-3 w-full
+                    h-300 z-10 '
+                        >
+                            <MonitorCard
+                                weather={"Cloudy"}
+                                temperature={"25°C"}
+                                tag_value={tag_value}
+                                places={"Wirobrajan, Yogyakarta"}
+                                isState={isToggled}
+                                onState={() => setIsToggled(!isToggled)}
+                            />
+                        </div>
+                        <div className='absolute blur-2xl top-12 w-1/2 h-14 bg-amber-400'></div>
+                        <div className='h-14 w-full md:w-full px-1 mb-4 md:ml-0'>
+                            <NavRoom
+                                room_one={"sitting room"}
+                                room_two={"beedroom"}
+                                room_tr={"kitchen"}
+                                room_fr={"bathroom"}
+                                room_f={"home page"}
+                                room_s={"home terrace"}
+                                handleRoomOne={() => userRoom("1")}
+                                handleRoomTwo={() => userRoom("2")}
+                                handleRoomTr={() => userRoom("3")}
+                                handleRoomFr={() => userRoom("4")}
+                                handleRoomF={() => userRoom("5")}
+                                handleRoomS={() => userRoom("6")}
+                                isRoom={isRoom}
+                            />
+                        </div>
+                        <div
+                            className=' w-full md:px-2 grid sm:grid-cols-2
+                        md:grid-cols-2 gap-4 md:ml-0.5 overflow-y-scroll
+                        scrolling-touch items-start sm:h-full md:h-screen'
+                        >
+                            {isRoom === "1" ? <SitRoomPanel /> : null}
+                            {isRoom === "2" ? <BadRoomPanel /> : null}
+                            {isRoom === "3" ? <KitchenRoom /> : null}
+                            {isRoom === "4" ? <BathRoomPanel /> : null}
+                            {isRoom === "5" ? "hello4" : null}
+                            {isRoom === "6" ? "hello5" : null}
+                            {isRoom == "" ? <SitRoomPanel /> : null}
+                        </div>
                     </div>
                 </div>
             </SideNavbar>

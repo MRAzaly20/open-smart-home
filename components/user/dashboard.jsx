@@ -98,8 +98,8 @@ const AboutPage = () => {
                 <div
                     className='md:relative flex md:w-full sm:w-full flex-col py-4
                     items-center justify-center sm:mx-auto h-screen
-                    sm:max-h-[40rem]
-            md:max-h-[50rem] sm:max-w-[70rem] md:mr-100 px-3'
+                    sm:max-h-[40rem] md:px-2
+            md:max-h-[50rem] sm:max-w-[70rem] md:mr-6 px-3 md:px-0'
                 >
                     <div
                         className='grid grid-cols-1 md:px-1 mt-1 mb-3 w-full
@@ -115,7 +115,7 @@ const AboutPage = () => {
                         />
                     </div>
                     <div className='fixed blur-2xl top-16 w-1/2 h-14 bg-amber-400'></div>
-                    <div className='h-14 w-full md:w-[69rem] px-1 mb-4 md:ml-0'>
+                    <div className='h-14 w-full md:w-full px-1 mb-4 md:ml-0'>
                         <NavRoom
                             room_one={"sitting room"}
                             room_two={"beedroom"}
@@ -133,8 +133,9 @@ const AboutPage = () => {
                         />
                     </div>
                     <div
-                        className=' w-full md:px-1 grid sm:grid-cols-2
-                        md:grid-cols-2 gap-4 md:ml-2 overflow-y-scroll scrolling-touch items-start sm:h-full md:h-300'
+                        className=' w-full md:px-2 grid sm:grid-cols-2
+                        md:grid-cols-2 gap-4 md:ml-0.5 overflow-y-scroll
+                        scrolling-touch items-start sm:h-full md:h-screen'
                     >
                         {isRoom === "1" ? <SitRoomPanel /> : null}
                         {isRoom === "2" ? <BadRoomPanel /> : null}

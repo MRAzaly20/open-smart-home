@@ -75,7 +75,7 @@ const BadRoomPanel = () => {
     return (
         <div>
             <div
-                className='w-full md:w-[67rem] grid grid-cols-2
+                className='w-full md:w-[66rem] grid grid-cols-2
                         md:grid-cols-5 gap-4 md:gap-4'
             >
                 <CardPanel

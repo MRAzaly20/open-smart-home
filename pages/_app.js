@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
                 !session &&
                 !localValue
             ) {
-                router.push("/");
+                //router.push("/");
                 console.log();
             }
         };

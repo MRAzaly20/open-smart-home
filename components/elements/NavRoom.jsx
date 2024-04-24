@@ -79,7 +79,7 @@ const NavRoom = ({
 
     return (
         <div
-            className='w-full md:max-w-[80rem] sm:max-w-[20rem] flex
+            className='w-full md:max-w-[67rem] sm:max-w-[20rem] flex
             overflow-x-auto sm:gap-8 justify-items-center md:h-14 sm:h-full
             h-full rounded-xl mb-3
             px-4 py-2 backdrop-blur-3xl isolate bg-white/20'

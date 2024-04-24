@@ -23,7 +23,7 @@ const MonitorCard = ({
     return (
         <div>
             <div
-                className='p-2 px-4 w-full h-30 backdrop-blur-3xl isolate
+                className='p-2 px-4 w-full md:max-w-[67rem] sm:max-w-[20rem] h-30 backdrop-blur-3xl isolate
     rounded-xl bg-white/20 shadow-lg ring-1 ring-black/5  peer-focus:left-0 peer:transition ease-out
     delay-150 duration-200'
             >

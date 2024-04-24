@@ -52,7 +52,7 @@ function SideNavbar({ children }) {
                 router.push("/");
             }
         } catch (error) {
-            console.error("Failed to logout:", error);
+            console.error("Failed to logout :", error);
         }
     };
 

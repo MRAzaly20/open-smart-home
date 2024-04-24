@@ -8,7 +8,7 @@ export default NextAuth({
             // URL redirect setelah logout
             return "/";
         },
-        
+
         async jwt({ token, user }) {
             // Jika user ada, tambahkan token JWT ke objek token
             if (user) {
@@ -55,7 +55,7 @@ export default NextAuth({
         secret: "SECRET" // Gunakan secret yang sebenarnya di lingkungan produksi
     },
     pages: {
-        signIn: "/auth/signin",
+        signIn: "/",
         signOut: "/register",
         error: "/auth/error", // Error code passed in query string as ?error=
         verifyRequest: "/auth/verify-request", // (used for check email message)
