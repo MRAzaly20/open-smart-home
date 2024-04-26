@@ -23,6 +23,7 @@ export default function Home() {
 
     const handleSubmit = async () => {
         const status = await getSession();
+        //await setValue(session);
         const all_token = value ? JSON.parse(JSON.stringify(value)) : "";
         const _accessToken = all_token ? all_token.accessToken : 1;
         alert(session);
@@ -31,8 +32,10 @@ export default function Home() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             const session = await getSession();
+            if (!statusLogin) {
+                await setValue(session);
+            }
 
-            await setValue(session);
 
             //    setValue("")
             const all_token = value ? JSON.parse(JSON.stringify(value)) : "";
@@ -224,12 +227,12 @@ export default function Home() {
                                             Sign in
                                         </button>
 
-                                        {/*<button
+                                        <button
                                             onClick={() => handleSubmit()}
                                             className='w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-3 text-center bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-800'
                                         >
                                             Test
-                                        </button>*/}
+                                        </button>
                                     </div>
                                     <div
                                         className='grid sm:grid-cols-1 md:grid-cols-2

@@ -11,38 +11,38 @@ const AreaChartPlot = () => {
     const data = [
         {
             year: "2016",
-            Iphone: 4000,
-            Samsung: 2400
+            Wheater: 4000,
+            Humidity: 2400
         },
         {
             year: "2017",
-            Iphone: 3000,
-            Samsung: 1398
+            Wheater: 3000,
+            Humidity: 1398
         },
         {
             year: "2018",
-            Iphone: 2000,
-            Samsung: 9800
+            Wheater: 2000,
+            Humidity: 9800
         },
         {
             year: "2019",
-            Iphone: 2780,
-            Samsung: 3908
+            Wheater: 2780,
+            Humidity: 3908
         },
         {
             year: "2020",
-            Iphone: 1890,
-            Samsung: 4800
+            Wheater: 1890,
+            Humidity: 4800
         },
         {
             year: "2021",
-            Iphone: 2390,
-            Samsung: 3800
+            Wheater: 2390,
+            Humidity: 3800
         },
         {
             year: "2022",
-            Iphone: 3490,
-            Samsung: 4300
+            Wheater: 3490,
+            Humidity: 4300
         }
     ];
     return (
@@ -98,14 +98,14 @@ const AreaChartPlot = () => {
                     <Tooltip />
                     <Area
                         type='monotone'
-                        dataKey='Iphone'
+                        dataKey='Wheater'
                         stroke='#8884d8'
                         fillOpacity={1}
                         fill='url(#colorUv)'
                     />
                     <Area
                         type='monotone'
-                        dataKey='Samsung'
+                        dataKey='Humidity'
                         stroke='#82ca9d'
                         fillOpacity={1}
                         fill='url(#colorPv)'

@@ -59,6 +59,6 @@ export default NextAuth({
         signOut: "/register",
         error: "/auth/error", // Error code passed in query string as ?error=
         verifyRequest: "/auth/verify-request", // (used for check email message)
-        newUser: null // Jika pengguna baru dibuat, redirect ke halaman ini
+        newUser: "/" // Jika pengguna baru dibuat, redirect ke halaman ini
     }
 });

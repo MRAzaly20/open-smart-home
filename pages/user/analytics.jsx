@@ -5,6 +5,10 @@ import AnalyticsCard from "@/components/elements/AnalyticsCard";
 import { useRouter } from "next/router";
 import React from "react";
 import AreaChartPlot from "@/components/user/charts/ChartPlot";
+import BarChartPlot from "@/components/user/charts/BarChart";
+import LineChartPlot from "@/components/user/charts/LineChart";
+import PieChartPlot  from "@/components/user/charts/PieChart";
+
 
 export default function profile() {
     const router = useRouter();
@@ -38,7 +42,7 @@ export default function profile() {
                 </div>
                 <div
                     className='md:ml-56 sm:w-full h-[600px] md:w-full md:max-w-[70rem]
-                    md:h-[650px] grid md:grid-cols-2
+                    md:h-[540px] grid md:grid-cols-2
                 sm:grid-cols-1 gap-4 px-2 md:py-5 overflow-y-scroll
                 scrolling-touch '
                 >
@@ -46,7 +50,13 @@ export default function profile() {
                         <AreaChartPlot />
                     </div>
                     <div className='w-full h-[300px] bg-gray-700 rounded-xl'>
-                        <AreaChartPlot />
+                        <PieChartPlot  />
+                    </div>
+                    <div className='w-full h-[300px] bg-gray-700 rounded-xl'>
+                        <LineChartPlot />
+                    </div>
+                    <div className='w-full h-[300px] bg-gray-700 rounded-xl'>
+                        <BarChartPlot />
                     </div>
                     <div className='w-full h-[300px] bg-gray-700 rounded-xl'>
                         <AreaChartPlot />

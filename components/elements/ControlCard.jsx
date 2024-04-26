@@ -8,10 +8,10 @@ import {
     MdOutlineMoreHoriz,
     MdOutlineSettings,
     MdOutlineHome,
-    MdOutlineLogout
+    MdSettings
 } from "react-icons/md";
 
-const ControlCard = ({ isState, onState, title, room_name }) => {
+const ControlCard = ({ isState, onState, setServer, title, room_name }) => {
     return (
         <div>
             <div
@@ -35,11 +35,8 @@ const ControlCard = ({ isState, onState, title, room_name }) => {
                         <Link
                             href={"/user/dashboard"}
                             className='flex w-auto mb-2 justify-start
-                                pointer-events-auto items-center gap-4 pl-5
-                                hover:isolate
-                                hover:bg-gray
-                                hover:shadow-lg hover:ring-1 hover:ring-black/5 p-2 rounded-md
-                                group cursor-pointer hover:shadow-lg m-auto'
+                                pointer-events-auto items-center gap-4 pl-5  p-2 rounded-md
+                                group cursor-pointer m-auto'
                         >
                             <MdOutlineHome
                                 className='text-3xl text-gray-800
@@ -53,8 +50,19 @@ const ControlCard = ({ isState, onState, title, room_name }) => {
                                 {room_name}
                             </h4>
                         </Link>
-                        <div className='relative top-3'>
-                            <Toggle isToggled={isState} onToggled={onState} />
+                        <div
+                            className="justify-items-center border-b grid
+                    grid-cols-2 gap-14"
+                        >
+                            <div className='relative top-3'>
+                                <Toggle isToggled={isState} onToggled={onState} />
+                            </div>
+                            <button onClick={setServer} className='relative bottom-1 hover:text-white'>
+                                <MdSettings
+                                    className='text-xl text-gray-800
+                          hover:text-white mr-8'
+                                />
+                            </button>
                         </div>
                     </div>
                 </div>
