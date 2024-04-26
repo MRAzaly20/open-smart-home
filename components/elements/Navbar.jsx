@@ -89,8 +89,7 @@ function SideNavbar({ children }) {
                                 className='flex mb-2 justify-start
                                 pointer-events-auto items-center gap-4 pl-5
                                 hover:isolate
-                                hover:bg-gray
-                                hover:shadow-lg hover:ring-1 hover:ring-black/5 p-2 rounded-md
+                                hover:bg-gray hover:ring-1 hover:ring-black/5 p-2 rounded-md
                                 group cursor-pointer hover:shadow-lg m-auto'
                             >
                                 <MdOutlineSpaceDashboard className='text-2xl text-gray-800 group-hover:text-white' />
@@ -101,8 +100,7 @@ function SideNavbar({ children }) {
                             <Link
                                 href={"/"}
                                 className='flex  mb-2 justify-start items-center gap-4 pl-5 hover:isolate
-                                hover:bg-gray
-                                hover:shadow-lg hover:ring-1 hover:ring-black/5 p-2 rounded-md
+                                hover:bg-gray hover:ring-1 hover:ring-black/5 p-2 rounded-md
                                 group cursor-pointer hover:shadow-lg m-auto'
                             >
                                 <CgProfile className='text-2xl text-gray-800 group-hover:text-white ' />
@@ -113,8 +111,7 @@ function SideNavbar({ children }) {
                             <Link
                                 href={"/"}
                                 className='flex  mb-2 justify-start items-center gap-4 pl-5 hover:isolate
-                                hover:bg-gray
-                                hover:shadow-lg hover:ring-1 hover:ring-black/5 p-2 rounded-md
+                                hover:bg-gray hover:ring-1 hover:ring-black/5 p-2 rounded-md
                                 group cursor-pointer hover:shadow-lg m-auto'
                             >
                                 <FaRegComments className='text-2xl text-gray-800 group-hover:text-white ' />
@@ -125,8 +122,7 @@ function SideNavbar({ children }) {
                             <Link
                                 href={"/user/analytics"}
                                 className='flex  mb-2 justify-start items-center gap-4 pl-5 hover:isolate
-                                hover:bg-gray
-                                hover:shadow-lg hover:ring-1 hover:ring-black/5 p-2 rounded-md
+                                hover:bg-gray hover:ring-1 hover:ring-black/5 p-2 rounded-md
                                 group cursor-pointer hover:shadow-lg m-auto'
                             >
                                 <MdOutlineAnalytics className='text-2xl text-gray-800 group-hover:text-white ' />
@@ -137,8 +133,7 @@ function SideNavbar({ children }) {
                             <Link
                                 href={"/"}
                                 className='flex  mb-2 justify-start items-center gap-4 pl-5 hover:isolate
-                                hover:bg-gray
-                                hover:shadow-lg hover:ring-1 hover:ring-black/5 p-2 rounded-md
+                                hover:bg-gray hover:ring-1 hover:ring-black/5 p-2 rounded-md
                                 group cursor-pointer hover:shadow-lg m-auto'
                             >
                                 <BiMessageSquareDots className='text-2xl text-gray-800 group-hover:text-white ' />
@@ -149,8 +144,7 @@ function SideNavbar({ children }) {
                             <Link
                                 href={"/"}
                                 className='flex  mb-2 justify-start items-center gap-4 pl-5 hover:isolate
-                                hover:bg-gray
-                                hover:shadow-lg hover:ring-1 hover:ring-black/5 p-2 rounded-md
+                                hover:bg-gray hover:ring-1 hover:ring-black/5 p-2 rounded-md
                                 group cursor-pointer hover:shadow-lg m-auto'
                             >
                                 <MdOutlineIntegrationInstructions className='text-2xl text-gray-800 group-hover:text-white ' />
@@ -164,8 +158,7 @@ function SideNavbar({ children }) {
                             <Link
                                 href={"/"}
                                 className='flex mb-2 justify-start items-center gap-4 pl-5 hover:isolate
-                                hover:bg-gray
-                                hover:shadow-lg hover:ring-1 hover:ring-black/5 p-2 rounded-md
+                                hover:bg-gray hover:ring-1 hover:ring-black/5 p-2 rounded-md
                                 group cursor-pointer hover:shadow-lg m-auto'
                             >
                                 <MdOutlineSettings className='text-2xl text-gray-800 group-hover:text-white ' />
@@ -176,8 +169,7 @@ function SideNavbar({ children }) {
                             <Link
                                 href={"/"}
                                 className='flex mb-2 justify-start items-center gap-4 pl-5 hover:isolate
-                                hover:bg-gray
-                                hover:shadow-lg hover:ring-1 hover:ring-black/5 p-2 rounded-md
+                                hover:bg-gray hover:ring-1 hover:ring-black/5 p-2 rounded-md
                                 group cursor-pointer hover:shadow-lg m-auto'
                             >
                                 <MdOutlineMoreHoriz className='text-2xl text-gray-800 group-hover:text-white ' />
@@ -191,8 +183,7 @@ function SideNavbar({ children }) {
                             <button
                                 onClick={() => handleLogout()}
                                 className='flex mb-2 justify-start items-center gap-4 pl-5 border border-gray-200 hover:isolate
-                                hover:bg-gray
-                                hover:shadow-lg hover:ring-1 hover:ring-black/5 p-2 rounded-md
+                                hover:bg-gray hover:ring-1 hover:ring-black/5 p-2 rounded-md
                                 group cursor-pointer hover:shadow-lg m-auto'
                             >
                                 <MdOutlineLogout className='text-2xl text-gray-800 group-hover:text-white ' />

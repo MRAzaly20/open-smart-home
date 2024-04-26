@@ -32,11 +32,11 @@ const Dropdown = () => {
       <div className="relative group">
         <button
           id="dropdown-button"
-          className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
+          className="inline-flex justify-center w-full px-4 py-1 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500"
           onClick={() => setIsOpen(!isOpen)}
         >
           <span className="mr-2">
-            {isOpen ? "Close List Server" : "Open List Server"}
+            {isOpen ? "Close" : "Open"}
           </span>
 
           {/* SVG icon */}
