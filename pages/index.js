@@ -7,9 +7,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { getCsrfToken } from "next-auth/react";
-import useLocalStorage from "@/hooks/useLocalStorage";
-import AboutPage from "../components/user/dashboard";
-import SideNavbar from "../components/elements/Navbar";
+import useLocalStorage from "@/src/hooks/useLocalStorage";
+import AboutPage from "@/src/components/user/dashboard";
+import SideNavbar from "@/src/components/elements/Navbar";
+import Cookies from "js-cookie";
 
 export default function Home() {
     const { data: session } = useSession();
@@ -26,18 +27,26 @@ export default function Home() {
         //await setValue(session);
         const all_token = value ? JSON.parse(JSON.stringify(value)) : "";
         const _accessToken = all_token ? all_token.accessToken : 1;
-        alert(session);
+        alert(status);
     };
-
+    const toLogIn = async () => {
+      await window.localStorage.removeItem("token");
+      await new Promise(resolve => setTimeout(resolve, 500));
+      submit()
+    }
     useEffect(() => {
         const checkLoginStatus = async () => {
             const session = await getSession();
-            if (!statusLogin) {
+            if (loading) {
                 await setValue(session);
             }
-
-
             //    setValue("")
+            if (session){
+              await Cookies.set("currentUser", JSON.stringify(session));
+            }
+            if (!session){
+              Cookies.remove("currentUser");
+            }
             const all_token = value ? JSON.parse(JSON.stringify(value)) : "";
             const _accessToken = all_token ? all_token.accessToken : 1;
 
@@ -60,7 +69,7 @@ export default function Home() {
                     console.log("hello");
                 }
                 if (response) {
-                    await new Promise(resolve => setTimeout(resolve, 500));
+                    await new Promise(resolve => setTimeout(resolve, 1000));
                     setLoading(false);
                 }
             } catch (error) {
@@ -82,6 +91,7 @@ export default function Home() {
 
             return;
         }
+        
         const result = await signIn("credentials", {
             username,
             password
@@ -221,18 +231,18 @@ export default function Home() {
                                     {/* <button type="submit" className="w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-3 text-center bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-800">Sign in</button> */}
                                     <div className='mb-3 flex flex-row  gap-2'>
                                         <button
-                                            onClick={() => submit()}
+                                            onClick={() => toLogIn()}
                                             className='w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-3 text-center bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-800'
                                         >
                                             Sign in
                                         </button>
 
-                                        <button
+                                        {/*<button
                                             onClick={() => handleSubmit()}
                                             className='w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-3 text-center bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-800'
                                         >
                                             Test
-                                        </button>
+                                        </button>*/}
                                     </div>
                                     <div
                                         className='grid sm:grid-cols-1 md:grid-cols-2

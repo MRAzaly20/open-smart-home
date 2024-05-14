@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { getCsrfToken } from "next-auth/react";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import useLocalStorage from "@/src/hooks/useLocalStorage";
 
 export default function Home() {
     const { data: session } = useSession();

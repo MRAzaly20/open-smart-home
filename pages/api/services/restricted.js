@@ -11,7 +11,7 @@ export default async function GET(req, res) {
     if (!accessToken) {
         return res.status(401).json({ message: "Access token is missing" });
     }
-
+    console.log(accessToken)
     try {
         //console.log(accessToken);
         // Mengirim permintaan ke backend Django untuk mem-blacklist refresh token

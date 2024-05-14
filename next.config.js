@@ -1,6 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-}
+    reactStrictMode: true,
+    webpack5: true,
+    webpack: config => {
+        config.resolve.fallback = {};
 
-module.exports = nextConfig
+        // Tambahkan konfigurasi tambahan di sini jika diperlukan
+
+        return config;
+    }
+    // Anda bisa menambahkan properti konfigurasi lainnya di sini
+};
+
+module.exports = nextConfig;

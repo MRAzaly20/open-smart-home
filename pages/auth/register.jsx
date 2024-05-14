@@ -1,5 +1,5 @@
 "use client";
-import { register_now } from "@/services";
+import { register_now } from "@/src/services";
 import Link from "next/link";
 import React from "react";
 import { useState } from "react";

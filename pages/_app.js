@@ -1,20 +1,22 @@
+"use client"
 import "@/styles/globals.css";
 import { SessionProvider, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import SideNavbar from "../components/elements/Navbar";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import SideNavbar from "@/src/components/elements/Navbar";
+import useLocalStorage from "@/src/hooks/useLocalStorage";
+import { Provider } from 'react-redux';
+import { store } from '@/src/utils/store';
+import { redirect } from "next/navigation";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     const router = useRouter();
-    //const { data: sessionData } = useSession();
     const [value, setValue] = useLocalStorage("token");
 
     useEffect(() => {
-        const checkLoginStatus = async () => {
-            const session = await getSession();
+        const checkLoginStatus = () => {
+            const session = getSession();
             const localValue = value;
-            //await setValue(session)
             if (
                 router.asPath !== "/" &&
                 router.asPath !== "/auth/register" &&
@@ -23,8 +25,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
                 !session &&
                 !localValue
             ) {
-                //router.push("/");
-                console.log();
+                router.push("/");
+                //console.log();
             }
         };
 
@@ -32,9 +34,11 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     }, [router, value]);
 
     return (
-        <SessionProvider session={session}>
-            <App Component={Component} pageProps={pageProps} />
-        </SessionProvider>
+        <Provider store={store}>
+            <SessionProvider session={session}>
+                <App Component={Component} pageProps={pageProps} />
+            </SessionProvider>
+        </Provider>
     );
 }
 
@@ -47,8 +51,6 @@ function App({ Component, pageProps }) {
         "/auth/username",
         "/auth/wa-login"
     ];
-    const noNav_ = ["/", "/auth/register", "/auth/username", "/auth/wa-login"];
-    const [value, setValue] = useLocalStorage("token");
     const showNav = !noNav.includes(router.pathname);
 
     return (
