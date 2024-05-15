@@ -66,7 +66,7 @@ const AboutPage = () => {
     }, []);
     useEffect(() => {
         if (!dashboard) {
-            router.push(`/user/dashboard/${dynamicRoutePart}`);
+            router.push(`/user/dashboard/${genRoute}`);
         }
     }, [dashboard, router]);
 

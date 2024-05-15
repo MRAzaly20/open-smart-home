@@ -1,12 +1,12 @@
-"use client"
+"use client";
 import "@/styles/globals.css";
 import { SessionProvider, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import SideNavbar from "@/src/components/elements/Navbar";
 import useLocalStorage from "@/src/hooks/useLocalStorage";
-import { Provider } from 'react-redux';
-import { store } from '@/src/utils/store';
+import { Provider } from "react-redux";
+import { store } from "@/src/utils/store";
 import { redirect } from "next/navigation";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
@@ -44,14 +44,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
 function App({ Component, pageProps }) {
     const router = useRouter();
-    const noNav = [
-        "/",
-        "/signin",
-        "/auth/register",
-        "/auth/username",
-        "/auth/wa-login"
-    ];
-    const showNav = !noNav.includes(router.pathname);
+    const hideNavForRoutes = ["/", "/signin", "/auth/*"];
+    const shouldHideNav = pathname => {
+        return hideNavForRoutes.some(route => {
+            if (route.endsWith("/*")) {
+                const routeBase = route.slice(0, -2);
+                return pathname.startsWith(routeBase);
+            }
+            return pathname === route;
+        });
+    };
+
+    const showNav = !shouldHideNav(router.pathname);
 
     return (
         <div>

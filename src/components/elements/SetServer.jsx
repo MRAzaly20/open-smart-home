@@ -46,13 +46,6 @@ const SetServer = ({
         "TCP IP"
     ];
 
-    /*const access = Cookies.get("currentUser");
-    const TokenObj = access ? JSON.parse(access) : null;
-    const accessToken = TokenObj?.accessToken;
-    const accessValid = JSON.stringify(accessToken);
-    const jwt_token = jwtDecode(accessValid);
-    const jwt_user_id = JSON.parse(jwt_token);*/
-
     const getAccessToken = () => {
         try {
             const access = Cookies.get("currentUser");
@@ -68,7 +61,7 @@ const SetServer = ({
 
     const accessToken = getAccessToken();
 
-    const saveDevice = async data => {
+    const saveDevice = async () => {
         if (!accessToken) {
             console.error("Access token is not available.");
             return;
@@ -76,9 +69,9 @@ const SetServer = ({
 
         const jwt_token = jwtDecode(accessToken);
         const jwt_user_id = jwt_token.user_id;
-        await saveSetting(
+        const res = await saveSetting(
             {
-                user: jwt_user_id.user_id,
+                user: parseInt(jwt_user_id),
                 name: "Factory Views Energy App",
                 location: JSON.stringify(location),
                 status: "offline",
@@ -90,6 +83,7 @@ const SetServer = ({
             },
             accessToken
         );
+        return res
         //alert(accessToken.accessToken)
         /*const response = await fetch("/api/services/restricted/", {
             headers: {
@@ -210,7 +204,7 @@ const SetServer = ({
                                         className='mt-1 -z-30 cursor-pointer text-xs
                             text-blue-900 border-gray-100 '
                                     >
-                                         Server Connection
+                                        Server Connection
                                     </h1>
                                     <div
                                         className='text-center rounded-lg

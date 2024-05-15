@@ -7,8 +7,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 
-export default function register() {
+const Register = () => {
     const router = useRouter();
+    const { register } = router.query;
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -317,3 +318,4 @@ export default function register() {
         </>
     );
 }
+export default Register;

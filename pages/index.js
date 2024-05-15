@@ -30,10 +30,10 @@ export default function Home() {
         alert(status);
     };
     const toLogIn = async () => {
-      await window.localStorage.removeItem("token");
-      await new Promise(resolve => setTimeout(resolve, 500));
-      submit()
-    }
+        await window.localStorage.removeItem("token");
+        await new Promise(resolve => setTimeout(resolve, 500));
+        submit();
+    };
     useEffect(() => {
         const checkLoginStatus = async () => {
             const session = await getSession();
@@ -41,11 +41,13 @@ export default function Home() {
                 await setValue(session);
             }
             //    setValue("")
-            if (session){
-              await Cookies.set("currentUser", JSON.stringify(session));
+            if (session) {
+                await Cookies.set("currentUser", JSON.stringify(session), {
+                    expires: 1
+                });
             }
-            if (!session){
-              Cookies.remove("currentUser");
+            if (!session) {
+                Cookies.remove("currentUser");
             }
             const all_token = value ? JSON.parse(JSON.stringify(value)) : "";
             const _accessToken = all_token ? all_token.accessToken : 1;
@@ -91,7 +93,7 @@ export default function Home() {
 
             return;
         }
-        
+
         const result = await signIn("credentials", {
             username,
             password
@@ -264,7 +266,7 @@ export default function Home() {
                                     <p className='text-sm font-light text-gray-500 text-gray-400'>
                                         Don’t have an account yet?{" "}
                                         <Link
-                                            href='/auth/register'
+                                            href='/auth/register/'
                                             className='font-medium text-gray-900 hover:underline text-gray-900'
                                         >
                                             Sign up
