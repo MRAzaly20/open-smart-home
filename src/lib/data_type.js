@@ -1,0 +1,33 @@
+const TypeArrayFunction = [
+    "Bit",
+    "Byte",
+    "Word",
+    "DWord",
+    "LWord",
+    "SInt",
+    "Int",
+    "DInt",
+    "LInt",
+    "USInt",
+    "UInt",
+    "UDInt",
+    "ULInt",
+    "Real",
+    "LReal",
+    "Time",
+    "LTime",
+    "Date",
+    "LDate",
+    "Time_Of_Day",
+    "LTime_Of_Day",
+    "Date_And_Time",
+    "LDate_And_Time",
+    "String",
+    "WString",
+    "Array",
+    "Struct",
+    "Timer",
+    "Counter"
+];
+
+export default TypeArrayFunction;

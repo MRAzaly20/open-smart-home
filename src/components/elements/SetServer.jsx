@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Dropdown from "./DropDown";
+import DropDownType from "./DropDownType";
 import { useSelector, useDispatch } from "react-redux";
 import {
     MdOutlineAnalytics,
@@ -12,9 +13,14 @@ import {
 import { IoMdClose } from "react-icons/io";
 import { toggleServer } from "../../utils/serverSlice";
 import saveSetting from "@/src/services/connection/createDevice";
+import TypeArrayFunction from "@/src/lib/data_type";
+import TechArrayFunction from "@/src/lib/protocol";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import Toggle from "./Toggle";
+import { addOrUpdateIO } from "@/src/utils/IoAddressSlice";
+import { addOrUpdateStatus } from "@/src/utils/statusSlice";
+import useLocalStorage from "@/src/hooks/useLocalStorage";
 
 const SetServer = ({
     isState,
@@ -25,6 +31,8 @@ const SetServer = ({
     lamp_off
 }) => {
     const [location, setLocation] = useState();
+    const [value, setValue] = useLocalStorage("token");
+    const [ioValue, setIOValue] = useState();
     const [isToggled, setState] = useState(false);
     const dispatch = useDispatch();
     const openSet = () => {
@@ -34,17 +42,27 @@ const SetServer = ({
     const protocol = useSelector(
         state => state.protocol.devices[device.deviceName]?.protocol
     );
-    const technologies = [
-        "MQTT Broker",
-        "WebSocket",
-        "Modbus",
-        "OPC UA",
-        "FINS OMRON",
-        "RabbitMQ",
-        "InfluxDB",
-        "Web Api",
-        "TCP IP"
-    ];
+    const statusDevices = useSelector(
+        state => state.statusDevice.devices[device.deviceName]?.status
+    );
+    const setStatusDevice = () => {
+        setState(!isToggled);
+        dispatch(
+            addOrUpdateStatus({
+                deviceName: device.deviceName,
+                status: isToggled
+            })
+        );
+    };
+    const ioAddressVal = useSelector(
+        state => state.io.IO[device.deviceName]?.[protocol]?.ioAddress
+    );
+    const dataTypeVal = useSelector(
+        state =>
+            state.dataTypeIO.dataType[device.deviceName]?.[protocol]?.[
+                ioAddressVal
+            ]?.dataTypeIO
+    );
 
     const getAccessToken = () => {
         try {
@@ -60,7 +78,13 @@ const SetServer = ({
     };
 
     const accessToken = getAccessToken();
-
+    
+    const chectToken = async () => {
+      const roomID = Cookies.get("currentUser");
+      const jwt_token = jwtDecode(accessToken);
+      alert(JSON.stringify(jwt_token))
+    }
+    
     const saveDevice = async () => {
         if (!accessToken) {
             console.error("Access token is not available.");
@@ -69,21 +93,30 @@ const SetServer = ({
 
         const jwt_token = jwtDecode(accessToken);
         const jwt_user_id = jwt_token.user_id;
+        const deviceID = Cookies.get("idDevice");
+        const roomID = Cookies.get("roomID");
         const res = await saveSetting(
             {
+                room: roomID,
                 user: parseInt(jwt_user_id),
-                name: "Factory Views Energy App",
+                name: device.deviceName,
                 location: JSON.stringify(location),
-                status: "offline",
-                device_type: "Tipe_Device",
-                io_address: "Alamat_IO",
+                status: isToggled ? "online" : "offline",
+                device_type: "digital",
+                io_address: ioAddressVal?.toString(),
+                data_type: dataTypeVal ? dataTypeVal : null,
                 protocol: protocol,
                 digital_value: false,
-                analog_value: 23.2
+                analog_value: 23.2,
+                deviceID: deviceID ? deviceID : "1"
             },
             accessToken
         );
-        return res
+        if (res?.data?.id) {
+            Cookies.set("idDevice", res.data.id, {
+                expires: 1
+            });
+        }
         //alert(accessToken.accessToken)
         /*const response = await fetch("/api/services/restricted/", {
             headers: {
@@ -169,10 +202,8 @@ const SetServer = ({
                                     </h1>
                                     <div className='ml-12'>
                                         <Toggle
-                                            isToggled={isToggled}
-                                            onToggled={() =>
-                                                setState(!isToggled)
-                                            }
+                                            isToggled={statusDevices}
+                                            onToggled={() => setStatusDevice()}
                                         />
                                     </div>
                                 </div>
@@ -191,7 +222,28 @@ const SetServer = ({
                                     <div className='ml-12'>
                                         <Dropdown
                                             deviceRoom={device.deviceName}
-                                            technologies={technologies}
+                                            technologies={TechArrayFunction}
+                                        />
+                                    </div>
+                                </div>
+                                <div
+                                    className='w-full md:w-full z-10 p-2 px-4 h-10 backdrop-blur-3xl isolate
+    rounded-lg bg-white/20  peer-focus:left-0 peer:transition ease-out
+    delay-150 duration-200 grid grid-cols-2 '
+                                >
+                                    <h1
+                                        className='w-full  mt-1 z-30 cursor-pointer
+                                        text-xs
+                            text-blue-900 border-gray-100 '
+                                    >
+                                        Data Type
+                                    </h1>
+                                    <div className='ml-10 relative bottom-0.5'>
+                                        <DropDownType
+                                            deviceRoom={device.deviceName}
+                                            data={TypeArrayFunction}
+                                            protocol={protocol}
+                                            ioAddress={ioAddressVal}
                                         />
                                     </div>
                                 </div>
@@ -230,14 +282,26 @@ const SetServer = ({
                                         id='search-input'
                                         className=' w-full px-4 py-2 text-gray-800 border bg-violet-500 rounded-md border-gray-300 focus:outline-none'
                                         type='text'
+                                        value={ioAddressVal}
                                         placeholder='ex 0.00'
                                         autoComplete='on'
-                                        //onChange={(e) => setSearchTerm(e.target.value)}
+                                        onChange={e =>
+                                            dispatch(
+                                                addOrUpdateIO({
+                                                    deviceName:
+                                                        device.deviceName,
+                                                    protocol: protocol
+                                                        ? protocol
+                                                        : "Unknown",
+                                                    ioAddress: e.target.value
+                                                })
+                                            )
+                                        }
                                     />
                                 </div>
                             </section>
                             <button
-                                onClick={() => saveDevice()}
+                                onClick={() => chectToken()}
                                 className='relative ml-1 bottom-0 mt-32 flex mb-2 bg-white/20 justify-start items-center gap-4 pl-5 border border-gray-300 hover:isolate
                                 hover:bg-white/30 hover:ring-black/5 p-2 rounded-md
                                 group cursor-pointer hover:shadow-lg m-auto'

@@ -11,9 +11,10 @@ import useLocalStorage from "@/src/hooks/useLocalStorage";
 import AboutPage from "@/src/components/user/dashboard";
 import SideNavbar from "@/src/components/elements/Navbar";
 import Cookies from "js-cookie";
+import logout from "@/src/services";
 
 export default function Home() {
-    const { data: session } = useSession();
+    const session = getSession();
     const [value, setValue] = useLocalStorage("token");
     const [authorized, setAuthorized] = useState();
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -34,21 +35,33 @@ export default function Home() {
         await new Promise(resolve => setTimeout(resolve, 500));
         submit();
     };
+    const getExpToken = () => {
+        try {
+            const access = Cookies.get("currentUser");
+            if (access) {
+                const TokenObj = JSON.parse(access);
+                return TokenObj?.expires;
+            }
+        } catch (error) {
+            console.error("Error accessing the cookie:", error);
+            return null;
+        }
+    };
+
+    const expires = getExpToken();
+
     useEffect(() => {
         const checkLoginStatus = async () => {
             const session = await getSession();
             if (loading) {
                 await setValue(session);
             }
-            //    setValue("")
             if (session) {
                 await Cookies.set("currentUser", JSON.stringify(session), {
                     expires: 1
                 });
             }
-            if (!session) {
-                Cookies.remove("currentUser");
-            }
+
             const all_token = value ? JSON.parse(JSON.stringify(value)) : "";
             const _accessToken = all_token ? all_token.accessToken : 1;
 
@@ -57,7 +70,6 @@ export default function Home() {
                 const response = await fetch("/api/services/restricted/", {
                     headers: {
                         "Content-Type": "application/json",
-                        // Sertakan token JWT
                         Authorization: `Bearer ${_accessToken}`
                     }
                 });
@@ -90,7 +102,6 @@ export default function Home() {
         }
         if (!formData.password) {
             setError({ ...error, password: "Password Field is required" });
-
             return;
         }
 
@@ -135,7 +146,7 @@ export default function Home() {
                 />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
-            {loading && !authorized ? null : value && session && authorized ? (
+            {!authorized ? null : value && session && authorized ? (
                 <section
                     className="h-screen w-screen bg-cover bg-gray-300 bg-center
                 bg-[url('/bg.png')] sm:items-start"

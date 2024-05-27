@@ -2,26 +2,48 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { addOrUpdateDevice, removeDevice } from "@/src/utils/preferredServer";
+import { addOrUpdateDataType, removeDataType } from "@/src/utils/dataTypeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
-
-const Dropdown = ({ deviceRoom, technologies }) => {
+const DropDownType = props => {
+    const { deviceRoom, data, protocol, ioAddress } = props;
     const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const [ioType, setIoType] = useState("");
     const dropdownRef = useRef(null);
     const router = useRouter();
 
-    const setVal = tech => {
-        if (deviceRoom && tech) {
-            //dispatch(removeDevice('Device A'));
+    const device = useSelector(state => state.device);
+    const protocolIO = useSelector(
+        state => state.protocol.devices[device.deviceName]?.protocol
+    );
+    const ioAddressVal = useSelector(
+        state => state.io.IO[device.deviceName]?.[protocolIO]?.ioAddress
+    );
 
+    const dataTypeVal = useSelector(
+        state =>
+            state.dataTypeIO.dataType[device.deviceName]?.[protocolIO]?.[
+                ioAddressVal
+            ]?.dataTypeIO
+    );
+
+    const setVal = typeData => {
+        setIoType(typeData);
+        if (deviceRoom && typeData) {
+            //dispatch(removeDevice('Device A'));
             dispatch(
-                addOrUpdateDevice({ deviceName: deviceRoom, protocol: tech })
+                addOrUpdateDataType({
+                    deviceName: deviceRoom,
+                    protocol: protocol,
+                    ioAddress: ioAddress,
+                    dataTypeIO: typeData
+                })
             );
-            setIsOpen(!isOpen);
+
+            setIsOpen(false);
         } else {
             alert("deviceRoom or tech is undefined");
         }
@@ -45,11 +67,10 @@ const Dropdown = ({ deviceRoom, technologies }) => {
 
         filterItems();
     }, [searchTerm]);
-
     return (
         <div className='flex items-center justify-center'>
             <div className='relative group'>
-                 <span
+                <span
                     className='w-auto shadow-sm flex flex-cols-2 gap-0
                 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100
                 focus:ring-blue-500'
@@ -62,10 +83,10 @@ const Dropdown = ({ deviceRoom, technologies }) => {
                         bg-violet-300 rounded-bl-md
                     rounded-tl-md'
                     >
-                        {isOpen ? (
-                            <label>close</label>
+                        {dataTypeVal ? (
+                            <label>{dataTypeVal}</label>
                         ) : (
-                            <label>open</label>
+                            <label>{ioType ? ioType : "select"}</label>
                         )}
                     </button>
                     <span
@@ -98,13 +119,13 @@ const Dropdown = ({ deviceRoom, technologies }) => {
                         className='w-full max-h-[200px] overflow-y-scroll
                 scrolling-touch'
                     >
-                        {technologies.map(tech => (
-                            <button className='w-full h-auto' key={tech}>
+                        {data.map(type => (
+                            <button className='w-full h-auto' key={type}>
                                 <div
-                                    onClick={() => setVal(tech)}
+                                    onClick={() => setVal(type)}
                                     className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'
                                 >
-                                    {tech}
+                                    {type}
                                 </div>
                             </button>
                         ))}
@@ -115,4 +136,4 @@ const Dropdown = ({ deviceRoom, technologies }) => {
     );
 };
 
-export default Dropdown;
+export default DropDownType;

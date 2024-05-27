@@ -28,7 +28,7 @@ const AboutPage = () => {
     const [isRoom, setRoom] = useState("");
     const { dashboard } = router.query;
     
-    const genRoute = generate(40, 1000, 9999);
+    const genRoute = generate(40, 100, 999);
     
     const tag_value = {
         humidity: "24°C",
@@ -64,12 +64,7 @@ const AboutPage = () => {
     useEffect(() => {
         setRoom("1");
     }, []);
-    useEffect(() => {
-        if (!dashboard) {
-            router.push(`/user/dashboard/${genRoute}`);
-        }
-    }, [dashboard, router]);
-
+    
     const handleLogout = async () => {
         //    setValue("")
         const all_token = JSON.parse(JSON.stringify(value));

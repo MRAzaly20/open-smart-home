@@ -5,4 +5,4 @@ export const authRoutes = [
     "/auth/username",
     "/auth/wa-login"
 ];
-export const publicRoutes = ["/about", "/"];
+export const publicRoutes = ["/about", "/user/dashboard"];

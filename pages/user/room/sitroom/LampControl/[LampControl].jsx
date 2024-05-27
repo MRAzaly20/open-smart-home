@@ -1,4 +1,3 @@
-
 import LampControlRoom from "@/src/components/user/sitting-room/LampControl";
 import LampStatus from "@/src/components/user/group/GrupCardLamp";
 import SideNavbar from "@/src/components/elements/Navbar";
@@ -6,13 +5,16 @@ import React, { useState } from "react";
 import CardInfo from "@/src/components/elements/CardInfo";
 import SetServer from "@/src/components/elements/SetServer";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const LampControl = () => {
+    const router = useRouter();
     const [isSetServerVisible, setIsSetServerVisible] = useState(false);
     const lampStates = useSelector(state => state.lamps);
     const serverState = useSelector(state => state.server);
     const device = useSelector(state => state.device);
-   
+    const { LampControl } = router.query;
+    
     return (
         <SideNavbar>
             <section

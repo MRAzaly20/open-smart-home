@@ -28,7 +28,7 @@ export async function getServerSideProps(context) {
     if (!query.id) {
         return {
             redirect: {
-                destination: `/user/dashboard/123`,
+                destination: `/user/room/sitroom/LampControl/${dynamicRoutePart}`,
                 permanent: false
             }
         };

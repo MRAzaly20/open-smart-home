@@ -20,7 +20,7 @@ import useLocalStorage from "@/src/hooks/useLocalStorage";
 import axios from "axios";
 import Cookies from "js-cookie";
 import generate from "@/src/utils/generateRoute";
-
+import { logout } from "@/src/services";
 
 function SideNavbar({ children }) {
     const [state, setState] = useState(false);
@@ -30,26 +30,14 @@ function SideNavbar({ children }) {
     const genRoute = generate(100, 1000, 9999);
 
     const handleLogout = async () => {
+        //alert(JSON.stringify(value));
         //    setValue("")
         const all_token = JSON.parse(JSON.stringify(value));
         const _accessToken = all_token.accessToken;
         const _refreshToken = all_token.refreshToken;
-        //alert(_accessToken);
 
         try {
-            const response = await axios.post(
-                "/api/services/logout",
-                {
-                    refresh: _refreshToken
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${_accessToken}`
-                    }
-                }
-            );
-
+            const response = await logout(_refreshToken, _accessToken);
             if (response) {
                 await Cookies.remove("currentUser");
                 await window.localStorage.removeItem("token");
@@ -58,7 +46,7 @@ function SideNavbar({ children }) {
                 router.push("/");
             }
         } catch (error) {
-            console.error("Failed to logout :", error);
+            alert("Failed to logout :", error);
         }
     };
 

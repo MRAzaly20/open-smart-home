@@ -12,17 +12,23 @@ export default async function handler(req, res) {
             return res.status(401).json({ message: "Access token is missing" });
         }
         const {
+            room,
             user,
             name,
             location,
             status,
             device_type,
             io_address,
+            data_type,
             protocol,
             digital_value,
-            analog_value
+            analog_value,
+            deviceID
         } = req.body;
 
+        if (typeof room !== "string" || !room) {
+            return res.status(400).json({ error: "Invalid room ID" });
+        }
         if (typeof user !== "number" || user <= 0) {
             return res.status(400).json({ error: "Invalid user ID" });
         }
@@ -62,31 +68,75 @@ export default async function handler(req, res) {
                 .status(400)
                 .json({ error: "Invalid or missing analog value" });
         }
+        if (typeof deviceID !== "string") {
+            return res
+                .status(400)
+                .json({ error: "Invalid or missing device id" });
+        }
+        if (typeof data_type !== "string") {
+            return res
+                .status(400)
+                .json({ error: "Invalid or missing data type" });
+        }
 
-        const url = "http://localhost:8000/api/create/devices/";
+        const url = {
+            post: "http://localhost:8000/api/create/devices/",
+            getPut: "http://localhost:8000/api/get/put/devices/"
+        };
         const headers = {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`
         };
-
-        try {
-            const djangoResponse = await fetch(url, {
-                method: "POST",
-                headers: headers,
-                body: JSON.stringify(req.body)
+        const getData = async () => {
+            const djangoGetRes = await fetch(url["getPut"] + `${deviceID}/`, {
+                method: "GET",
+                headers: headers
             });
-
-            if (!djangoResponse.ok) {
-                throw new Error(`Error: ${djangoResponse.status}`);
+            if (!djangoGetRes.ok) {
+                return "no data";
             }
 
-            const data = await djangoResponse.json();
-            res.status(200).json(data);
+            return djangoGetRes.json();
+        };
+        try {
+            const toData = await getData();
+            console.log(JSON.stringify(toData));
+            if (name !== toData.name) {
+                const djangoResponse = await fetch(url["post"], {
+                    method: "POST",
+                    headers: headers,
+                    body: JSON.stringify(req.body)
+                });
+
+                if (!djangoResponse.ok) {
+                    throw new Error(`Error: ${djangoResponse.status}`);
+                }
+
+                const data = await djangoResponse.json();
+                res.status(200).json(data);
+            }
+            if (name === toData.name) {
+                const djangoResponse = await fetch(
+                    url["getPut"] + `${deviceID}/`,
+                    {
+                        method: "PUT",
+                        headers: headers,
+                        body: JSON.stringify(req.body)
+                    }
+                );
+
+                if (!djangoResponse.ok) {
+                    throw new Error(`Error: ${djangoResponse.status}`);
+                }
+
+                const data = await djangoResponse.json();
+                res.status(200).json(data);
+            }
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
     } else {
-        res.setHeader("Allow", ["POST"]);
+        res.setHeader("Allow", ["POST", "GET", "PUT"]);
         res.status(405).end(`Method ${req.method} Not Allowed`);
     }
 }

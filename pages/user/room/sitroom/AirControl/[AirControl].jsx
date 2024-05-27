@@ -7,15 +7,17 @@ import SetServer from "@/src/components/elements/SetServer";
 import { useSelector } from "react-redux";
 import dynamic from "next/dynamic";
 import generate from "@/src/utils/generateRoute";
+import { useRouter } from "next/router";
 
 const AirControl = () => {
-    // State to manage the visibility of the SetServer component on mobile
+    const router = useRouter();
     const [isSetServerVisible, setIsSetServerVisible] = useState(false);
     const lampStates = useSelector(state => state.lamps);
     const serverState = useSelector(state => state.server);
-    
+    const { AirControl } = router.query;
+
     const genRoute = generate(100, 1000, 9999);
-    
+
     const kbitsToMbits = value => {
         if (value >= 30) {
             value = value / 30;

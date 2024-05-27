@@ -1,4 +1,4 @@
-//import 
+//import
 
 export async function getServerSideProps(context) {
     const { query } = context;
@@ -28,10 +28,9 @@ export async function getServerSideProps(context) {
     if (!query.id) {
         return {
             redirect: {
-                destination: `/user/dashboard/123`,
+                destination: `/user/room/sitroom/AirControl/${dynamicRoutePart}`,
                 permanent: false
             }
         };
     }
-
 }
